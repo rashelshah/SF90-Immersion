@@ -78,7 +78,7 @@ export default function DriveModes() {
                                         className={`w-4 h-4 rounded-full flex-shrink-0 transition-all duration-300 ${isSelected ? 'ring-2 ring-offset-2 ring-offset-black' : 'opacity-30'}`}
                                         style={{
                                             backgroundColor: mode.color,
-                                            ringColor: isSelected ? mode.color : 'transparent'
+                                            ['--tw-ring-color' as any]: isSelected ? mode.color : 'transparent'
                                         }}
                                     />
                                 </div>
