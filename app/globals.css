@@ -4,11 +4,29 @@
   --font-orbitron: var(--font-orbitron);
   --font-rajdhani: var(--font-rajdhani);
 
+  /* Base Colors */
   --color-ferrari-black: #0b0b0b;
   --color-ferrari-red: #C00000;
   --color-racing-red: #FF1E1E;
   --color-carbon-gray: #1f1f1f;
   --color-metal-silver: #B5B5B5;
+
+  /* Premium Gradients */
+  --color-deep-crimson: #8B0000;
+  --color-platinum: #E5E4E2;
+  --color-gold-accent: #D4AF37;
+  --color-ruby-red: #E0115F;
+
+  /* Glass Morphism */
+  --glass-white: rgba(255, 255, 255, 0.05);
+  --glass-white-border: rgba(255, 255, 255, 0.1);
+  --glass-red: rgba(192, 0, 0, 0.1);
+  --glass-red-border: rgba(192, 0, 0, 0.3);
+
+  /* Premium Shadows */
+  --shadow-glow-red: 0 0 20px rgba(192, 0, 0, 0.3), 0 0 40px rgba(192, 0, 0, 0.1);
+  --shadow-premium: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-luxury: 0 20px 60px rgba(0, 0, 0, 0.5), 0 8px 16px rgba(192, 0, 0, 0.1);
 }
 
 @layer base {
@@ -66,5 +84,70 @@
     * {
       -webkit-tap-highlight-color: transparent;
     }
+  }
+
+  /* Premium Utility Classes */
+  .glass-panel {
+    background: linear-gradient(135deg, var(--glass-white) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-white-border);
+  }
+
+  .glass-panel-red {
+    background: linear-gradient(135deg, var(--glass-red) 0%, rgba(192, 0, 0, 0.05) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-red-border);
+  }
+
+  .text-gradient-red {
+    background: linear-gradient(135deg, var(--color-ruby-red) 0%, var(--color-ferrari-red) 50%, var(--color-deep-crimson) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-platinum {
+    background: linear-gradient(135deg, white 0%, var(--color-platinum) 50%, var(--color-metal-silver) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .premium-shadow {
+    box-shadow: var(--shadow-premium);
+  }
+
+  .luxury-shadow {
+    box-shadow: var(--shadow-luxury);
+  }
+
+  .glow-red {
+    box-shadow: var(--shadow-glow-red);
+  }
+
+  .metallic-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metallic-shine::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 70%);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    transition: transform 0.6s ease;
+  }
+
+  .metallic-shine:hover::before {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
   }
 }

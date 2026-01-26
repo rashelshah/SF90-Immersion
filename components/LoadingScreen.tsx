@@ -9,6 +9,13 @@ export default function LoadingScreen() {
     const [contentLoaded, setContentLoaded] = useState(false);
 
     useEffect(() => {
+        // Check if we've already shown the loading screen in this session
+        const hasLoaded = sessionStorage.getItem("ferrari_loaded");
+        if (hasLoaded) {
+            setIsLoading(false);
+            return;
+        }
+
         // Minimum display time of 2.5 seconds
         const minTimer = setTimeout(() => {
             setMinTimeElapsed(true);
@@ -37,6 +44,7 @@ export default function LoadingScreen() {
             // Add a small delay for smooth transition
             setTimeout(() => {
                 setIsLoading(false);
+                sessionStorage.setItem("ferrari_loaded", "true");
             }, 300);
         }
     }, [minTimeElapsed, contentLoaded]);

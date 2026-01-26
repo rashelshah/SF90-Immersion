@@ -35,32 +35,92 @@ export default function FerrariExperience({ scrollYProgress }: FerrariExperience
                 style={{ opacity: heroOpacity, scale: heroScale, filter: heroBlur, willChange: "transform, opacity" }}
                 className="absolute inset-0 flex flex-col items-start justify-start pt-24 md:pt-32 pl-6 md:pl-12 lg:pl-32 text-left z-20 transform-gpu"
             >
-                <span className="text-ferrari-red font-orbitron tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-base mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(192,0,0,0.5)]">
+                {/* Premium glow overlay */}
+                <motion.div
+                    className="absolute -top-20 -left-20 w-96 h-96 bg-ferrari-red/20 blur-[100px] rounded-full"
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.5, 0.3]
+                    }}
+                    transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                />
+
+                <motion.span
+                    className="text-ferrari-red font-orbitron tracking-[0.3em] md:tracking-[0.5em] text-xs md:text-sm lg:text-base mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(192,0,0,0.5)] relative z-10"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                >
                     SCUDERIA FERRARI
-                </span>
-                <h1 className="text-5xl md:text-7xl lg:text-9xl font-orbitron font-bold tracking-tighter mb-3 md:mb-4 text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-400">
-                    SF90
-                </h1>
-                <h2 className="text-3xl md:text-4xl lg:text-6xl font-orbitron uppercase tracking-[0.15em] md:tracking-[0.2em] text-white mb-6 md:mb-8">
+                </motion.span>
+
+                <motion.h1
+                    className="text-5xl md:text-7xl lg:text-9xl font-orbitron font-bold tracking-tighter mb-3 md:mb-4 text-gradient-platinum relative z-10 drop-shadow-2xl"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4, duration: 1, type: "spring", stiffness: 100 }}
+                >
+                    <motion.span
+                        className="inline-block"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                    >
+                        SF90
+                    </motion.span>
+                </motion.h1>
+
+                <motion.h2
+                    className="text-3xl md:text-4xl lg:text-6xl font-orbitron uppercase tracking-[0.15em] md:tracking-[0.2em] text-white mb-6 md:mb-8 relative z-10"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                >
                     Stradale
-                </h2>
+                    <motion.div
+                        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-ferrari-red via-racing-red to-transparent"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ delay: 1, duration: 1 }}
+                    />
+                </motion.h2>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 1 }}
-                    className="mt-4"
+                    transition={{ delay: 0.8, duration: 1 }}
+                    className="mt-4 relative z-10"
                 >
-                    <button
+                    <motion.button
                         onClick={() => {
                             const specsSection = document.getElementById('specs');
                             specsSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }}
-                        className="px-6 md:px-8 py-3 bg-ferrari-red text-white font-orbitron tracking-widest text-xs md:text-sm hover:bg-racing-red transition-colors pointer-events-auto cursor-pointer min-h-[44px] flex items-center justify-center"
+                        className="relative px-6 md:px-8 py-3 bg-gradient-to-r from-ferrari-red via-racing-red to-ferrari-red text-white font-orbitron tracking-widest text-xs md:text-sm pointer-events-auto cursor-pointer min-h-[44px] flex items-center justify-center overflow-hidden group premium-shadow"
+                        whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(192, 0, 0, 0.5)" }}
+                        whileTap={{ scale: 0.98 }}
                     >
-                        <span className="hidden md:inline">DISCOVER PERFORMANCE</span>
-                        <span className="md:hidden">DISCOVER</span>
-                    </button>
+                        {/* Animated shine effect */}
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
+                            animate={{ translateX: ["100%", "100%"] }}
+                            transition={{
+                                duration: 0,
+                                delay: 2,
+                                repeat: Infinity,
+                                repeatDelay: 3
+                            }}
+                            whileHover={{ translateX: "200%" }}
+                        />
+
+                        <span className="relative z-10">
+                            <span className="hidden md:inline">DISCOVER PERFORMANCE</span>
+                            <span className="md:hidden">DISCOVER</span>
+                        </span>
+                    </motion.button>
                 </motion.div>
             </motion.div>
 
@@ -69,7 +129,7 @@ export default function FerrariExperience({ scrollYProgress }: FerrariExperience
                 style={{ opacity: designOpacity, x: designX, willChange: "transform, opacity" }}
                 className="absolute inset-0 flex items-center justify-start pl-6 md:pl-12 lg:pl-32 pr-6 md:pr-12 z-20 transform-gpu"
             >
-                <div className="bg-black/20 backdrop-blur-sm p-6 md:p-8 border-l-4 border-ferrari-red max-w-xl">
+                <div className="bg-black/20 backdrop-blur-sm p-6 md:p-8 max-w-xl">
                     <h3 className="text-ferrari-red font-orbitron tracking-[0.3em] text-xs md:text-sm mb-2">AESTHETICS</h3>
                     <h2 className="text-4xl md:text-5xl lg:text-7xl font-orbitron font-bold mb-4 md:mb-6 text-white">DESIGN</h2>
                     <p className="text-lg md:text-xl lg:text-2xl font-rajdhani text-metal-silver leading-relaxed">
@@ -84,7 +144,7 @@ export default function FerrariExperience({ scrollYProgress }: FerrariExperience
                 style={{ opacity: perfOpacity, y: perfY, willChange: "transform, opacity" }}
                 className="absolute inset-0 flex items-center justify-end pr-6 md:pr-12 lg:pr-32 pl-6 md:pl-12 z-20 transform-gpu"
             >
-                <div className="bg-black/20 backdrop-blur-sm p-6 md:p-8 border-r-4 border-ferrari-red text-right">
+                <div className="bg-black/20 backdrop-blur-sm p-6 md:p-8 text-right">
                     <h3 className="text-ferrari-red font-orbitron tracking-[0.3em] text-xs md:text-sm mb-2">ENGINEERING</h3>
                     <h2 className="text-4xl md:text-5xl lg:text-7xl font-orbitron font-bold mb-6 md:mb-8 text-white">POWERTRAIN</h2>
 
