@@ -59,9 +59,9 @@ export default function Navbar() {
                 </motion.div>
 
                 {/* Engine Navigation Link */}
-                <Link href="/engine" className="hidden md:block">
+                <Link href="/engine" className="block">
                     <motion.button
-                        className="flex items-center gap-2 text-white/70 hover:text-ferrari-red transition-colors duration-300 font-rajdhani tracking-wider uppercase text-sm"
+                        className="flex items-center gap-2 text-white/70 hover:text-ferrari-red transition-colors duration-300 font-rajdhani tracking-wider uppercase text-xs md:text-sm"
                         whileHover={{ x: 5 }}
                         transition={{ type: "spring", stiffness: 400 }}
                     >
