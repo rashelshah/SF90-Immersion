@@ -74,6 +74,23 @@ export default function Navbar() {
                         </motion.span>
                     </motion.button>
                 </Link>
+
+                {/* Hybrid Systems Navigation Link */}
+                <Link href="/hybrid-systems" className="block">
+                    <motion.button
+                        className="flex items-center gap-2 text-white/70 hover:text-blue-400 transition-colors duration-300 font-rajdhani tracking-wider uppercase text-xs md:text-sm"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                    >
+                        <span>Hybrid</span>
+                        <motion.span
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                            →
+                        </motion.span>
+                    </motion.button>
+                </Link>
             </div>
 
             <motion.button
