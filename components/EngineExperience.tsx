@@ -5,6 +5,116 @@ import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import UniversalScrollCanvas from "@/components/UniversalScrollCanvas";
 
+// Custom Audio Player Component
+function EngineAudioPlayer() {
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [widget, setWidget] = useState<any>(null);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
+
+    useEffect(() => {
+        // Load SoundCloud Widget API
+        const script = document.createElement('script');
+        script.src = 'https://w.soundcloud.com/player/api.js';
+        script.async = true;
+        document.body.appendChild(script);
+
+        script.onload = () => {
+            if (iframeRef.current && (window as any).SC) {
+                const scWidget = (window as any).SC.Widget(iframeRef.current);
+                setWidget(scWidget);
+
+                // Set the starting position to 5 seconds to skip intro
+                scWidget.bind((window as any).SC.Widget.Events.READY, () => {
+                    scWidget.seekTo(7000); // Seek to 5 seconds (in milliseconds)
+                });
+
+                // Listen to play/pause events from the widget
+                scWidget.bind((window as any).SC.Widget.Events.PLAY, () => {
+                    setIsPlaying(true);
+                });
+                scWidget.bind((window as any).SC.Widget.Events.PAUSE, () => {
+                    setIsPlaying(false);
+                });
+                scWidget.bind((window as any).SC.Widget.Events.FINISH, () => {
+                    setIsPlaying(false);
+                    // Reset to 5 seconds when finished
+                    scWidget.seekTo(5000);
+                });
+            }
+        };
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    const togglePlay = () => {
+        if (widget) {
+            if (isPlaying) {
+                widget.pause();
+            } else {
+                widget.play();
+            }
+        }
+    };
+
+    return (
+        <>
+            {/* Hidden SoundCloud Widget */}
+            <iframe
+                ref={iframeRef}
+                width="0"
+                height="0"
+                scrolling="no"
+                frameBorder="no"
+                allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1388122603&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false"
+                style={{ position: 'absolute', left: '-9999px' }}
+            />
+
+            {/* Custom Button */}
+            <div className="fixed bottom-4 md:bottom-6 right-4 md:right-6 z-50 pointer-events-auto">
+                <motion.button
+                    onClick={togglePlay}
+                    className="group relative bg-black/40 backdrop-blur-md p-3 md:p-4 rounded-full border-2 border-ferrari-red/40 shadow-2xl hover:border-ferrari-red transition-all duration-300"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    {/* Pulsing background effect when playing */}
+                    {isPlaying && (
+                        <motion.div
+                            className="absolute inset-0 rounded-full bg-ferrari-red/20"
+                            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                        />
+                    )}
+
+                    {/* Play/Pause Icon */}
+                    <div className="relative w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
+                        {isPlaying ? (
+                            // Pause Icon
+                            <div className="flex gap-1 md:gap-1.5">
+                                <div className="w-1 md:w-1.5 h-5 md:h-6 bg-ferrari-red rounded-sm" />
+                                <div className="w-1 md:w-1.5 h-5 md:h-6 bg-ferrari-red rounded-sm" />
+                            </div>
+                        ) : (
+                            // Play Icon
+                            <div className="w-0 h-0 border-l-[10px] md:border-l-[12px] border-l-ferrari-red border-t-[6px] md:border-t-[8px] border-t-transparent border-b-[6px] md:border-b-[8px] border-b-transparent ml-0.5 md:ml-1" />
+                        )}
+                    </div>
+
+                    {/* Label - Fixed positioning to prevent overflow */}
+                    <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap pointer-events-none">
+                        <span className="text-ferrari-red font-orbitron text-[9px] md:text-[10px] tracking-widest uppercase bg-black/80 px-2 md:px-3 py-1 rounded-full border border-ferrari-red/30 shadow-lg">
+                            Engine Sound
+                        </span>
+                    </div>
+                </motion.button>
+            </div>
+        </>
+    );
+}
+
 export default function EngineExperience() {
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
@@ -214,6 +324,9 @@ export default function EngineExperience() {
                         </div>
                     </motion.div>
                 </div>
+
+                {/* Custom Audio Player */}
+                <EngineAudioPlayer />
             </div>
         </div>
     );

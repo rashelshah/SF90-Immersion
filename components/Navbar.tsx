@@ -7,6 +7,7 @@ import Link from "next/link";
 export default function Navbar() {
     const { scrollY } = useScroll();
     const [mounted, setMounted] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         setMounted(true);
@@ -41,7 +42,8 @@ export default function Navbar() {
                 }}
             />
 
-            <div className="flex items-center gap-4 md:gap-8">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
                 <motion.div
                     className="flex items-center gap-4"
                     whileHover={{ scale: 1.05 }}
@@ -59,9 +61,9 @@ export default function Navbar() {
                 </motion.div>
 
                 {/* Engine Navigation Link */}
-                <Link href="/engine" className="block">
+                <Link href="/engine">
                     <motion.button
-                        className="flex items-center gap-2 text-white/70 hover:text-ferrari-red transition-colors duration-300 font-rajdhani tracking-wider uppercase text-xs md:text-sm"
+                        className="flex items-center gap-2 text-white/70 hover:text-ferrari-red transition-colors duration-300 font-rajdhani tracking-wider uppercase text-sm"
                         whileHover={{ x: 5 }}
                         transition={{ type: "spring", stiffness: 400 }}
                     >
@@ -76,9 +78,9 @@ export default function Navbar() {
                 </Link>
 
                 {/* Hybrid Systems Navigation Link */}
-                <Link href="/hybrid-systems" className="block">
+                <Link href="/hybrid-systems">
                     <motion.button
-                        className="flex items-center gap-2 text-white/70 hover:text-blue-400 transition-colors duration-300 font-rajdhani tracking-wider uppercase text-xs md:text-sm"
+                        className="flex items-center gap-2 text-white/70 hover:text-blue-400 transition-colors duration-300 font-rajdhani tracking-wider uppercase text-sm"
                         whileHover={{ x: 5 }}
                         transition={{ type: "spring", stiffness: 400 }}
                     >
@@ -91,32 +93,116 @@ export default function Navbar() {
                         </motion.span>
                     </motion.button>
                 </Link>
+
+                {/* Aerodynamics Navigation Link */}
+                <Link href="/aerodynamics">
+                    <motion.button
+                        className="flex items-center gap-2 text-white/70 hover:text-cyan-400 transition-colors duration-300 font-rajdhani tracking-wider uppercase text-sm"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                    >
+                        <span>Aero</span>
+                        <motion.span
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                            →
+                        </motion.span>
+                    </motion.button>
+                </Link>
+
+                {/* Interior Navigation Link */}
+                <Link href="/interior">
+                    <motion.button
+                        className="flex items-center gap-2 text-white/70 hover:text-amber-400 transition-colors duration-300 font-rajdhani tracking-wider uppercase text-sm"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                    >
+                        <span>Interior</span>
+                        <motion.span
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                            →
+                        </motion.span>
+                    </motion.button>
+                </Link>
             </div>
 
-            <motion.button
-                onClick={() => window.open('https://www.ferrari.com/en-US/auto/ferrari-sf90-stradale', '_blank')}
-                className="relative px-4 md:px-6 py-2 border border-white/20 transition-all duration-300 text-xs md:text-sm tracking-[0.15em] md:tracking-[0.2em] uppercase font-orbitron font-medium cursor-pointer min-h-[44px] flex items-center overflow-hidden group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
+            {/* Mobile Navigation Header */}
+            <div className="flex md:hidden items-center gap-4">
+                <Link href="/" className="font-orbitron font-bold text-xl tracking-widest text-gradient-red drop-shadow-md relative cursor-pointer">
+                    FERRARI
+                </Link>
+            </div>
+
+
+            <div className="flex items-center gap-4">
+                <motion.button
+                    onClick={() => window.open('https://www.ferrari.com/en-US/auto/ferrari-sf90-stradale', '_blank')}
+                    className="relative px-3 md:px-6 py-1.5 md:py-2 border border-white/20 transition-all duration-300 text-xs md:text-sm tracking-[0.15em] md:tracking-[0.2em] uppercase font-orbitron font-medium cursor-pointer min-h-[36px] md:min-h-[44px] flex items-center overflow-hidden group"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                >
+                    {/* Gradient background on hover */}
+                    <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-ferrari-red via-racing-red to-ferrari-red opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        initial={false}
+                    />
+
+                    {/* Metallic shine effect */}
+                    <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+                    />
+
+                    {/* Glow effect */}
+                    <motion.div
+                        className="absolute inset-0 glow-red opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+
+                    <span className="relative z-10">Inquire</span>
+                </motion.button>
+
+                {/* Hamburger Button */}
+                <button
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    className="md:hidden relative w-8 h-8 flex flex-col items-center justify-center gap-1.5 z-50"
+                >
+                    <motion.span
+                        animate={{ rotate: mobileMenuOpen ? 45 : 0, y: mobileMenuOpen ? 6 : 0 }}
+                        className="w-full h-0.5 bg-white origin-center transition-transform"
+                    />
+                    <motion.span
+                        animate={{ opacity: mobileMenuOpen ? 0 : 1 }}
+                        className="w-full h-0.5 bg-white"
+                    />
+                    <motion.span
+                        animate={{ rotate: mobileMenuOpen ? -45 : 0, y: mobileMenuOpen ? -6 : 0 }}
+                        className="w-full h-0.5 bg-white origin-center transition-transform"
+                    />
+                </button>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            <motion.div
+                initial={{ opacity: 0, x: "100%" }}
+                animate={{ opacity: mobileMenuOpen ? 1 : 0, x: mobileMenuOpen ? "0%" : "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed inset-0 bg-deep-black/95 backdrop-blur-xl z-40 md:hidden flex flex-col items-center justify-center space-y-8 min-h-screen"
             >
-                {/* Gradient background on hover */}
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-ferrari-red via-racing-red to-ferrari-red opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={false}
-                />
-
-                {/* Metallic shine effect */}
-                <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-                />
-
-                {/* Glow effect */}
-                <motion.div
-                    className="absolute inset-0 glow-red opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                />
-
-                <span className="relative z-10">Inquire</span>
-            </motion.button>
-        </motion.nav>
+                <Link href="/engine" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="text-2xl font-orbitron text-white/80 hover:text-ferrari-red uppercase tracking-widest">Engine</span>
+                </Link>
+                <Link href="/hybrid-systems" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="text-2xl font-orbitron text-white/80 hover:text-blue-400 uppercase tracking-widest">Hybrid</span>
+                </Link>
+                <Link href="/aerodynamics" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="text-2xl font-orbitron text-white/80 hover:text-cyan-400 uppercase tracking-widest">Aero</span>
+                </Link>
+                <Link href="/interior" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="text-2xl font-orbitron text-white/80 hover:text-amber-400 uppercase tracking-widest">Interior</span>
+                </Link>
+            </motion.div>
+        </motion.nav >
     );
 }

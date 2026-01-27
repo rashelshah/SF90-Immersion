@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
 
 export function SpecsGrid() {
     const ref = useRef(null);
@@ -315,12 +316,14 @@ export function Technology() {
         {
             title: "Hybrid Architecture",
             icon: "⚡",
-            desc: "RAC-e (Race derived electronic controls) manages the torque distribution between front and rear axles for unprecedented traction and stability."
+            desc: "RAC-e (Race derived electronic controls) manages the torque distribution between front and rear axles for unprecedented traction and stability.",
+            link: "/hybrid-systems"
         },
         {
             title: "Aerodynamics",
             icon: "✈",
-            desc: "Shut-off Gurney, active front flaps, and rear diffuser generate 390 kg of downforce at 250 km/h - a 25% increase over the 488 GTB."
+            desc: "Shut-off Gurney, active front flaps, and rear diffuser generate 390 kg of downforce at 250 km/h - a 25% increase over the 488 GTB.",
+            link: "/aerodynamics"
         },
         {
             title: "8-Speed DCT",
@@ -387,91 +390,108 @@ export function Technology() {
                 </motion.div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    {technologies.map((tech, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 30, rotateX: 10 }}
-                            animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-                            transition={{
-                                duration: 0.6,
-                                delay: 0.4 + i * 0.08,
-                                type: "spring",
-                                stiffness: 120,
-                                damping: 15
-                            }}
-                            whileHover={{
-                                y: -12,
-                                scale: 1.02,
-                                transition: { duration: 0.3, type: "spring", stiffness: 300 }
-                            }}
-                            style={{ willChange: "transform, opacity" }}
-                            className="relative p-6 md:p-8 glass-panel-red border-white/10 hover:border-ferrari-red/60 transition-all group overflow-hidden transform-gpu luxury-shadow"
-                        >
-                            {/* Premium glow effect on hover */}
+                    {technologies.map((tech, i) => {
+                        const CardContent = (
                             <motion.div
-                                className="absolute inset-0 bg-gradient-to-br from-ferrari-red/10 via-racing-red/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                            ></motion.div>
-
-                            {/* Animated border shine */}
-                            <motion.div
-                                className="absolute inset-0 border-2 border-transparent group-hover:border-ferrari-red/30 transition-all duration-500"
-                                animate={{
-                                    boxShadow: ["0 0 0px rgba(192,0,0,0)", "0 0 20px rgba(192,0,0,0.3)", "0 0 0px rgba(192,0,0,0)"]
-                                }}
+                                key={i}
+                                initial={{ opacity: 0, y: 30, rotateX: 10 }}
+                                animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
                                 transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    repeatDelay: 1
+                                    duration: 0.6,
+                                    delay: 0.4 + i * 0.08,
+                                    type: "spring",
+                                    stiffness: 120,
+                                    damping: 15
                                 }}
-                            />
-
-                            {/* Top corner accent - enhanced */}
-                            <div className="absolute top-0 left-0 w-12 h-12 border-l-2 border-t-2 border-ferrari-red/40 group-hover:border-ferrari-red group-hover:w-16 group-hover:h-16 transition-all duration-300"></div>
-
-                            {/* Icon with enhanced hover effect */}
-                            <motion.div
-                                whileHover={{ scale: 1.2, rotate: 8 }}
-                                transition={{ type: "spring", stiffness: 400 }}
-                                className="text-5xl md:text-6xl mb-6 relative z-10 filter drop-shadow-lg"
-                            >
-                                {tech.icon}
-                            </motion.div>
-
-                            {/* Content */}
-                            <div className="relative z-10">
-                                <h3 className="text-xl md:text-2xl font-orbitron font-bold mb-4 text-gradient-platinum group-hover:text-gradient-red transition-all duration-300">
-                                    {tech.title}
-                                </h3>
-                                <p className="text-sm md:text-base font-rajdhani text-white/80 leading-relaxed">
-                                    {tech.desc}
-                                </p>
-                            </div>
-
-                            {/* Bottom accent line - enhanced */}
-                            <motion.div
-                                initial={{ scaleX: 0 }}
-                                whileInView={{ scaleX: 1 }}
-                                transition={{ duration: 0.6, delay: 0.6 + i * 0.08 }}
-                                className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-ferrari-red via-racing-red to-transparent origin-left group-hover:h-2 transition-all duration-300"
-                            ></motion.div>
-
-                            {/* Number indicator - enhanced */}
-                            <motion.div
-                                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-white/20 group-hover:border-ferrari-red/50 text-white/30 group-hover:text-ferrari-red/70 font-orbitron text-xs transition-all duration-300 glass-panel"
-                                whileHover={{ scale: 1.1, rotate: 5 }}
-                            >
-                                {String(i + 1).padStart(2, '0')}
-                            </motion.div>
-
-                            {/* Metallic shine on hover */}
-                            <motion.div
-                                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                                style={{
-                                    background: "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%)",
+                                whileHover={{
+                                    y: -12,
+                                    scale: 1.02,
+                                    transition: { duration: 0.3, type: "spring", stiffness: 300 }
                                 }}
-                            />
-                        </motion.div>
-                    ))}
+                                style={{ willChange: "transform, opacity" }}
+                                className={`relative p-6 md:p-8 glass-panel-red border-white/10 hover:border-ferrari-red/60 transition-all group overflow-hidden transform-gpu luxury-shadow ${tech.link ? 'cursor-pointer' : ''}`}
+                            >
+                                {/* Premium glow effect on hover */}
+                                <motion.div
+                                    className="absolute inset-0 bg-gradient-to-br from-ferrari-red/10 via-racing-red/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                ></motion.div>
+
+                                {/* Animated border shine */}
+                                <motion.div
+                                    className="absolute inset-0 border-2 border-transparent group-hover:border-ferrari-red/30 transition-all duration-500"
+                                    animate={{
+                                        boxShadow: ["0 0 0px rgba(192,0,0,0)", "0 0 20px rgba(192,0,0,0.3)", "0 0 0px rgba(192,0,0,0)"]
+                                    }}
+                                    transition={{
+                                        duration: 2,
+                                        repeat: Infinity,
+                                        repeatDelay: 1
+                                    }}
+                                />
+
+                                {/* Top corner accent - enhanced */}
+                                <div className="absolute top-0 left-0 w-12 h-12 border-l-2 border-t-2 border-ferrari-red/40 group-hover:border-ferrari-red group-hover:w-16 group-hover:h-16 transition-all duration-300"></div>
+
+                                {/* Icon with enhanced hover effect */}
+                                <motion.div
+                                    whileHover={{ scale: 1.2, rotate: 8 }}
+                                    transition={{ type: "spring", stiffness: 400 }}
+                                    className="text-5xl md:text-6xl mb-6 relative z-10 filter drop-shadow-lg"
+                                >
+                                    {tech.icon}
+                                </motion.div>
+
+                                {/* Content */}
+                                <div className="relative z-10">
+                                    <h3 className="text-xl md:text-2xl font-orbitron font-bold mb-4 text-gradient-platinum group-hover:text-gradient-red transition-all duration-300">
+                                        {tech.title}
+                                    </h3>
+                                    <p className="text-sm md:text-base font-rajdhani text-white/80 leading-relaxed">
+                                        {tech.desc}
+                                    </p>
+                                </div>
+
+                                {/* Bottom accent line - enhanced */}
+                                <motion.div
+                                    initial={{ scaleX: 0 }}
+                                    whileInView={{ scaleX: 1 }}
+                                    transition={{ duration: 0.6, delay: 0.6 + i * 0.08 }}
+                                    className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-ferrari-red via-racing-red to-transparent origin-left group-hover:h-2 transition-all duration-300"
+                                ></motion.div>
+
+                                {/* Number indicator - enhanced */}
+                                <motion.div
+                                    className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center border border-white/20 group-hover:border-ferrari-red/50 text-white/30 group-hover:text-ferrari-red/70 font-orbitron text-xs transition-all duration-300 glass-panel"
+                                    whileHover={{ scale: 1.1, rotate: 5 }}
+                                >
+                                    {String(i + 1).padStart(2, '0')}
+                                </motion.div>
+
+                                {/* Metallic shine on hover */}
+                                <motion.div
+                                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                                    style={{
+                                        background: "linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%)",
+                                    }}
+                                />
+
+                                {/* Link indicator for clickable cards */}
+                                {tech.link && (
+                                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <span className="text-ferrari-red text-xl">→</span>
+                                    </div>
+                                )}
+                            </motion.div>
+                        );
+
+                        return tech.link ? (
+                            <Link key={i} href={tech.link}>
+                                {CardContent}
+                            </Link>
+                        ) : (
+                            CardContent
+                        );
+                    })}
                 </div>
             </div>
         </section>
