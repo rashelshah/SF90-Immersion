@@ -127,6 +127,23 @@ export default function Navbar() {
                         </motion.span>
                     </motion.button>
                 </Link>
+
+                {/* Gallery Navigation Link */}
+                <Link href="/gallery">
+                    <motion.button
+                        className="flex items-center gap-2 text-white/70 hover:text-purple-400 transition-colors duration-300 font-rajdhani tracking-wider uppercase text-sm"
+                        whileHover={{ x: 5 }}
+                        transition={{ type: "spring", stiffness: 400 }}
+                    >
+                        <span>Gallery</span>
+                        <motion.span
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                            →
+                        </motion.span>
+                    </motion.button>
+                </Link>
             </div>
 
             {/* Mobile Navigation Header */}
@@ -201,6 +218,9 @@ export default function Navbar() {
                 </Link>
                 <Link href="/interior" onClick={() => setMobileMenuOpen(false)}>
                     <span className="text-2xl font-orbitron text-white/80 hover:text-amber-400 uppercase tracking-widest">Interior</span>
+                </Link>
+                <Link href="/gallery" onClick={() => setMobileMenuOpen(false)}>
+                    <span className="text-2xl font-orbitron text-white/80 hover:text-purple-400 uppercase tracking-widest">Gallery</span>
                 </Link>
             </motion.div>
         </motion.nav >
