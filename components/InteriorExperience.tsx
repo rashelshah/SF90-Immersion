@@ -31,12 +31,9 @@ export default function InteriorExperience() {
         // Speedometer (100/192 = 0.52): 0.47 - 0.57
         // Display (181/192 = 0.94): 0.89 - 1.0
         if (!activeFeature) {
-            setShowDots(
-                latest <= 0.15 || // Start
-                (latest >= 0.31 && latest <= 0.41) || // Wheel Zone
-                (latest >= 0.47 && latest <= 0.57) || // Speedometer Zone
-                latest >= 0.89 // Display Zone
-            );
+            // Only show at the very beginning (First Frame)
+            // Removed other zones as per request to only show at the "first frame"
+            setShowDots(latest < 0.01);
         }
     });
 
