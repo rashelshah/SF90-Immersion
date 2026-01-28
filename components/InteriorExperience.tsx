@@ -13,18 +13,41 @@ export default function InteriorExperience() {
 
     const [isInView, setIsInView] = useState(false);
     const [showDots, setShowDots] = useState(true);
-    const [activeFeature, setActiveFeature] = useState<'cockpit' | 'steering' | 'console' | null>(null);
+    const [activeFeature, setActiveFeature] = useState<'cockpit' | 'steering' | 'speedometer' | null>(null);
     const [scrollProgress, setScrollProgress] = useState(0);
+
+    const [currentFrame, setCurrentFrame] = useState(0);
 
     // Update view state and scroll position
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
         setIsInView(latest < 1);
         setScrollProgress(latest);
-        // Show dots only at key positions AND when no feature is active
+        // Map 0-1 to 1-192 (Frame 1 to Frame 192)
+        const frame = Math.floor(latest * 192) + 1;
+        setCurrentFrame(frame);
+
+        // Show dots at key positions (Zones) based on Frame Targets
+        // Wheel (70/192 = 0.36): 0.31 - 0.41
+        // Speedometer (100/192 = 0.52): 0.47 - 0.57
+        // Display (181/192 = 0.94): 0.89 - 1.0
         if (!activeFeature) {
-            setShowDots(latest <= 0.05 || (latest >= 0.23 && latest <= 0.27) || (latest >= 0.48 && latest <= 0.52) || (latest >= 0.73 && latest <= 0.77));
+            setShowDots(
+                latest <= 0.15 || // Start
+                (latest >= 0.31 && latest <= 0.41) || // Wheel Zone
+                (latest >= 0.47 && latest <= 0.57) || // Speedometer Zone
+                latest >= 0.89 // Display Zone
+            );
         }
     });
+
+    // Helper to check if frame is within range (tolerance of +/- 15 frames for better visibility)
+    const isFrameVisible = (targetFrame: number) => {
+        // Special case for Display (Frame 181) - visible until end
+        if (targetFrame === 181) {
+            return currentFrame >= 166; // 181 - 15
+        }
+        return Math.abs(currentFrame - targetFrame) <= 15;
+    };
 
     // Function to scroll to specific position with custom smooth animation
     const scrollToPosition = (targetProgress: number) => {
@@ -58,14 +81,16 @@ export default function InteriorExperience() {
     };
 
     // Handle dot click with instant scroll (no animation lag)
-    const handleDotClick = (featureType: 'cockpit' | 'steering' | 'console') => {
+    const handleDotClick = (featureType: 'cockpit' | 'steering' | 'speedometer') => {
         setActiveFeature(featureType);
         setShowDots(false);
         // Instant scroll to precise frame positions
-        // Cockpit (Display): Frame 240 (100% - End)
-        // Steering (Wheel): Frame 216 (90% - 216/240)
-        // Console: Frame 180 (75% - 180/240)
-        const targetProgress = featureType === 'cockpit' ? 1.0 : featureType === 'steering' ? 0.90 : 0.75;
+        // Steering (Wheel): Frame 70 (36.4%)
+        // Speedometer: Frame 100 (52.1%)
+        // Cockpit (Display): Frame 181 (94.2%)
+        const targetProgress = featureType === 'steering' ? (70 / 192) :
+            featureType === 'speedometer' ? (100 / 192) :
+                (181 / 192);
 
         // Instant scroll without animation for immediate response
         if (containerRef.current) {
@@ -100,20 +125,25 @@ export default function InteriorExperience() {
     const titleOpacity = useTransform(scrollYProgress, [0, 0.15, 0.22], [1, 1, 0]);
     const titleY = useTransform(scrollYProgress, [0, 0.22], [0, -100]);
 
-    // Cockpit animations
-    const cockpitOpacity = useTransform(scrollYProgress, [0.18, 0.25, 0.35, 0.42], [0, 1, 1, 0]);
-    const cockpitX = useTransform(scrollYProgress, [0.18, 0.25], [-200, 0]);
+    // Data Panel Logic: Reordered to match Video Flow (Wheel -> Speedometer -> Display)
 
-    // Steering animations
-    const steeringOpacity = useTransform(scrollYProgress, [0.43, 0.50, 0.60, 0.67], [0, 1, 1, 0]);
-    const steeringX = useTransform(scrollYProgress, [0.43, 0.50], [200, 0]);
+    // 1. Steering (Wheel) - Frame ~70 (0.36)
+    // Appear: 0.30 - 0.42
+    const steeringOpacity = useTransform(scrollYProgress, [0.28, 0.36, 0.42, 0.48], [0, 1, 1, 0]);
+    const steeringX = useTransform(scrollYProgress, [0.28, 0.36], [-50, 0]); // From Left now
 
-    // Console animations - stays visible until the end
-    const consoleOpacity = useTransform(scrollYProgress, [0.68, 0.75, 0.85, 1.0], [0, 1, 1, 1]);
-    const consoleY = useTransform(scrollYProgress, [0.68, 0.75], [100, 0]);
+    // 2. Speedometer - Frame ~100 (0.52)
+    // Appear: 0.46 - 0.58
+    const speedometerOpacity = useTransform(scrollYProgress, [0.46, 0.52, 0.58, 0.64], [0, 1, 1, 0]);
+    const speedometerY = useTransform(scrollYProgress, [0.46, 0.52], [50, 0]);
 
-    // Final stats
-    const statsOpacity = useTransform(scrollYProgress, [0.88, 0.95, 1], [0, 1, 1]);
+    // 3. Cockpit (Display) - Frame ~181 (0.94)
+    // Appear: 0.85 - 1.0 (End)
+    const cockpitOpacity = useTransform(scrollYProgress, [0.80, 0.88, 1.0], [0, 1, 1]); // Stays visible
+    const cockpitX = useTransform(scrollYProgress, [0.80, 0.88], [50, 0]); // From Right
+
+    // Final stats - shifted slightly
+    const statsOpacity = useTransform(scrollYProgress, [0.90, 0.95, 1], [0, 0, 1]);
 
     const cockpitData = {
         title: "DIGITAL COCKPIT",
@@ -135,13 +165,13 @@ export default function InteriorExperience() {
         ]
     };
 
-    const consoleData = {
-        title: "CENTER CONSOLE",
+    const speedometerData = {
+        title: "SPEEDOMETER",
         stats: [
-            { label: "Climate Control", value: "Dual-Zone", unit: "System" },
-            { label: "Craftsmanship", value: "Premium", unit: "Materials" },
-            { label: "Storage Type", value: "Multi-Level", unit: "Design" },
-            { label: "Charging", value: "Wireless", unit: "Technology" }
+            { label: "Precision", value: "Digital", unit: "Accuracy" },
+            { label: "Visibility", value: "High-Contrast", unit: "Display" },
+            { label: "Design", value: "Racing", unit: "Inspired" },
+            { label: "Response", value: "Instant", unit: "Feedback" }
         ]
     };
 
@@ -152,58 +182,22 @@ export default function InteriorExperience() {
                 {/* Scroll Canvas */}
                 <UniversalScrollCanvas
                     scrollYProgress={scrollYProgress}
-                    totalFrames={240}
-                    imageFolderPath="/interior-frames"
-                    imagePrefix="ezgif-frame-"
+                    totalFrames={192}
+                    imageFolderPath="/Interior-Frames"
+                    imagePrefix=""
                     imageExtension="jpg"
+                    padLength={4}
+                    startIndex={1}
                     cropBottomPercent={0.08}
                 />
 
                 {/* Interactive Overlay */}
                 <div className="absolute inset-0 pointer-events-none">
-                    {/* Interactive Dots - Only show when no feature is active */}
+                    {/* Interactive Dots - Only show when no feature is active AND frame matches */}
                     <AnimatePresence>
                         {showDots && !activeFeature && (
                             <>
-                                {/* Digital Cockpit Dot - Left (25%) */}
-                                <motion.button
-                                    initial={{ scale: 0, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0, opacity: 0 }}
-                                    onClick={() => handleDotClick('cockpit')}
-                                    className="absolute left-[20%] md:left-[20%] top-[50%] md:top-[45%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
-                                    whileHover={{ scale: 1.2 }}
-                                    whileTap={{ scale: 0.9 }}
-                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                >
-                                    <div className="relative w-full h-full flex items-center justify-center">
-                                        {/* Outer Ring (Static Grey Border - on top) */}
-                                        <div className="absolute inset-0 rounded-full border-2 border-white/80 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.5)] z-10" />
-
-                                        {/* Inner Hollow Ripple Ring (expands behind) */}
-                                        <motion.div
-                                            animate={{
-                                                scale: [0.8, 2], // Start slightly smaller, expand larger
-                                                opacity: [0.8, 0],
-                                                borderWidth: ["2px", "0px"] // Fade out border thickness
-                                            }}
-                                            transition={{
-                                                duration: 2.5,
-                                                repeat: Infinity,
-                                                ease: "easeOut",
-                                                repeatDelay: 1
-                                            }}
-                                            className="absolute inset-0 rounded-full border-2 border-white/60 z-0 box-border"
-                                        />
-
-                                        {/* Label (Hidden until hover) */}
-                                        <div className="absolute top-full mt-3 left-1/2 -translate-x-1/2 text-center whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
-                                            <span className="text-[10px] md:text-xs font-orbitron font-bold text-white tracking-wider uppercase bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-xl">Display</span>
-                                        </div>
-                                    </div>
-                                </motion.button>
-
-                                {/* Steering Wheel Dot - Center (50%) */}
+                                {/* Steering Wheel Dot - Frame 70 */}
                                 <motion.button
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
@@ -215,10 +209,7 @@ export default function InteriorExperience() {
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                 >
                                     <div className="relative w-full h-full flex items-center justify-center">
-                                        {/* Outer Ring (Static Grey Border) */}
                                         <div className="absolute inset-0 rounded-full border-2 border-white/80 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.5)] z-10" />
-
-                                        {/* Inner Hollow Ripple Ring */}
                                         <motion.div
                                             animate={{
                                                 scale: [0.8, 2],
@@ -233,30 +224,25 @@ export default function InteriorExperience() {
                                             }}
                                             className="absolute inset-0 rounded-full border-2 border-white/60 z-0 box-border"
                                         />
-
-                                        {/* Label (Hidden until hover) */}
                                         <div className="absolute top-full mt-3 left-1/2 -translate-x-1/2 text-center whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
                                             <span className="text-[10px] md:text-xs font-orbitron font-bold text-white tracking-wider uppercase bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-xl">Wheel</span>
                                         </div>
                                     </div>
                                 </motion.button>
 
-                                {/* Center Console Dot - Right (25%) */}
+                                {/* Speedometer Dot - Frame 100 */}
                                 <motion.button
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
-                                    onClick={() => handleDotClick('console')}
+                                    onClick={() => handleDotClick('speedometer')}
                                     className="absolute right-[20%] md:right-[20%] top-[50%] md:top-[50%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                 >
                                     <div className="relative w-full h-full flex items-center justify-center">
-                                        {/* Outer Ring (Static Grey Border) */}
                                         <div className="absolute inset-0 rounded-full border-2 border-white/80 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.5)] z-10" />
-
-                                        {/* Inner Hollow Ripple Ring */}
                                         <motion.div
                                             animate={{
                                                 scale: [0.8, 2],
@@ -271,10 +257,41 @@ export default function InteriorExperience() {
                                             }}
                                             className="absolute inset-0 rounded-full border-2 border-white/60 z-0 box-border"
                                         />
-
-                                        {/* Label (Hidden until hover) */}
                                         <div className="absolute top-full mt-3 left-1/2 -translate-x-1/2 text-center whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
-                                            <span className="text-[10px] md:text-xs font-orbitron font-bold text-white tracking-wider uppercase bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-xl">Console</span>
+                                            <span className="text-[10px] md:text-xs font-orbitron font-bold text-white tracking-wider uppercase bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-xl">Speedometer</span>
+                                        </div>
+                                    </div>
+                                </motion.button>
+
+                                {/* Digital Cockpit Dot - Frame 181 */}
+                                <motion.button
+                                    initial={{ scale: 0, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    exit={{ scale: 0, opacity: 0 }}
+                                    onClick={() => handleDotClick('cockpit')}
+                                    className="absolute left-[20%] md:left-[20%] top-[50%] md:top-[45%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
+                                    whileHover={{ scale: 1.2 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                >
+                                    <div className="relative w-full h-full flex items-center justify-center">
+                                        <div className="absolute inset-0 rounded-full border-2 border-white/80 backdrop-blur-md shadow-[0_0_15px_rgba(255,255,255,0.5)] z-10" />
+                                        <motion.div
+                                            animate={{
+                                                scale: [0.8, 2],
+                                                opacity: [0.8, 0],
+                                                borderWidth: ["2px", "0px"]
+                                            }}
+                                            transition={{
+                                                duration: 2.5,
+                                                repeat: Infinity,
+                                                ease: "easeOut",
+                                                repeatDelay: 1
+                                            }}
+                                            className="absolute inset-0 rounded-full border-2 border-white/60 z-0 box-border"
+                                        />
+                                        <div className="absolute top-full mt-3 left-1/2 -translate-x-1/2 text-center whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-20">
+                                            <span className="text-[10px] md:text-xs font-orbitron font-bold text-white tracking-wider uppercase bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 shadow-xl">Display</span>
                                         </div>
                                     </div>
                                 </motion.button>
@@ -291,13 +308,10 @@ export default function InteriorExperience() {
                                 exit={{ opacity: 0 }}
                                 className="absolute inset-0"
                             >
-                                {/* Close Button - Top Right with Premium Animations */}
                                 <motion.button
                                     onClick={() => {
                                         setActiveFeature(null);
-                                        // Specific smooth scroll reset to frame 0
                                         scrollToPosition(0);
-                                        // Show dots after animation completes (150ms)
                                         setTimeout(() => {
                                             setShowDots(true);
                                         }, 150);
@@ -305,11 +319,7 @@ export default function InteriorExperience() {
                                     initial={{ scale: 0, rotate: -90 }}
                                     animate={{ scale: 1, rotate: 0 }}
                                     exit={{ scale: 0, rotate: 90 }}
-                                    whileHover={{
-                                        scale: 1.1,
-                                        backgroundColor: "rgba(220, 38, 38, 0.8)", // Ferrari Red on hover
-                                        borderColor: "rgba(220, 38, 38, 1)"
-                                    }}
+                                    whileHover={{ scale: 1.1, backgroundColor: "rgba(220, 38, 38, 0.8)", borderColor: "rgba(220, 38, 38, 1)" }}
                                     whileTap={{ scale: 0.95 }}
                                     className="absolute top-24 right-6 md:top-28 md:right-12 w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center transition-colors pointer-events-auto z-[60] group"
                                 >
@@ -318,71 +328,46 @@ export default function InteriorExperience() {
                                     </svg>
                                 </motion.button>
 
-                                {/* Data Panel with Enhanced Entrance Animation used to be right-4 top-1/2. Now moving to bottom on mobile. */}
                                 <motion.div
                                     initial={{ y: 100, opacity: 0, scale: 0.9 }}
                                     animate={{ y: 0, opacity: 1, scale: 1 }}
                                     exit={{ y: 100, opacity: 0, scale: 0.9 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 200,
-                                        damping: 25,
-                                        duration: 0.4
-                                    }}
-                                    // Mobile: Bottom Sheet (to avoid covering car) | Desktop: Right Float
+                                    transition={{ type: "spring", stiffness: 200, damping: 25, duration: 0.4 }}
                                     className="absolute left-4 right-4 bottom-12 md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:-translate-y-1/2 max-w-[90vw] md:w-80 pointer-events-auto z-20"
                                 >
                                     <div className="bg-black/60 backdrop-blur-md border-l-2 border-white/20 shadow-2xl relative">
-                                        {/* Accent border based on feature */}
-                                        <div className={`absolute top-0 left-0 w-1 h-full ${activeFeature === 'cockpit' ? 'bg-amber-400' :
-                                            activeFeature === 'steering' ? 'bg-white' :
-                                                'bg-blue-400'
-                                            }`} />
-
+                                        <div className={`absolute top-0 left-0 w-1 h-full ${activeFeature === 'cockpit' ? 'bg-amber-400' : activeFeature === 'steering' ? 'bg-white' : 'bg-blue-400'}`} />
                                         <div className="p-3 md:p-6">
-                                            {/* Title */}
                                             <motion.h3
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: 0.1 }}
-                                                className={`text-lg md:text-3xl font-orbitron font-bold mb-3 md:mb-6 ${activeFeature === 'cockpit' ? 'text-amber-400' :
-                                                    activeFeature === 'steering' ? 'text-white' :
-                                                        'text-blue-400'
-                                                    }`}
+                                                className={`text-lg md:text-3xl font-orbitron font-bold mb-3 md:mb-6 ${activeFeature === 'cockpit' ? 'text-amber-400' : activeFeature === 'steering' ? 'text-white' : 'text-blue-400'}`}
                                             >
-                                                {activeFeature === 'cockpit' ? cockpitData.title :
-                                                    activeFeature === 'steering' ? steeringData.title :
-                                                        consoleData.title}
+                                                {activeFeature === 'cockpit' ? cockpitData.title : activeFeature === 'steering' ? steeringData.title : speedometerData.title}
                                             </motion.h3>
-
-                                            {/* Stats Grid */}
                                             <div className="space-y-2 md:space-y-4">
-                                                {(activeFeature === 'cockpit' ? cockpitData.stats :
-                                                    activeFeature === 'steering' ? steeringData.stats :
-                                                        consoleData.stats).map((stat, i) => (
-                                                            <motion.div
-                                                                key={stat.label}
-                                                                initial={{ opacity: 0, x: 20 }}
-                                                                animate={{ opacity: 1, x: 0 }}
-                                                                transition={{ delay: i * 0.1 }}
-                                                                className="border-b border-white/10 pb-1 md:pb-3"
-                                                            >
-                                                                <div className="text-[10px] md:text-xs text-metal-silver font-rajdhani tracking-wider uppercase mb-0.5 md:mb-1">
-                                                                    {stat.label}
-                                                                </div>
-                                                                <div className="flex items-baseline gap-2">
-                                                                    <span className="text-lg md:text-3xl font-orbitron font-bold text-white">
-                                                                        {stat.value}
-                                                                    </span>
-                                                                    <span className={`text-xs md:text-sm font-orbitron ${activeFeature === 'cockpit' ? 'text-amber-400' :
-                                                                        activeFeature === 'steering' ? 'text-white' :
-                                                                            'text-blue-400'
-                                                                        }`}>
-                                                                        {stat.unit}
-                                                                    </span>
-                                                                </div>
-                                                            </motion.div>
-                                                        ))}
+                                                {(activeFeature === 'cockpit' ? cockpitData.stats : activeFeature === 'steering' ? steeringData.stats : speedometerData.stats).map((stat, i) => (
+                                                    <motion.div
+                                                        key={stat.label}
+                                                        initial={{ opacity: 0, x: 20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: i * 0.1 }}
+                                                        className="border-b border-white/10 pb-1 md:pb-3"
+                                                    >
+                                                        <div className="text-[10px] md:text-xs text-metal-silver font-rajdhani tracking-wider uppercase mb-0.5 md:mb-1">
+                                                            {stat.label}
+                                                        </div>
+                                                        <div className="flex items-baseline gap-2">
+                                                            <span className="text-lg md:text-3xl font-orbitron font-bold text-white">
+                                                                {stat.value}
+                                                            </span>
+                                                            <span className={`text-xs md:text-sm font-orbitron ${activeFeature === 'cockpit' ? 'text-amber-400' : activeFeature === 'steering' ? 'text-white' : 'text-blue-400'}`}>
+                                                                {stat.unit}
+                                                            </span>
+                                                        </div>
+                                                    </motion.div>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
@@ -415,59 +400,19 @@ export default function InteriorExperience() {
                         </motion.div>
                     )}
 
-                    {/* Digital Cockpit Info - Left side - Hidden when feature is active */}
-                    {!activeFeature && (
-                        <motion.div
-                            style={{ opacity: cockpitOpacity, x: cockpitX, willChange: "transform, opacity" }}
-                            className="absolute left-6 md:left-12 lg:left-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[80vw] md:max-w-md pointer-events-auto"
-                        >
-                            <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-l-2 border-amber-400">
-                                <h2 className="text-amber-400 font-orbitron tracking-[0.3em] text-[10px] md:text-xs mb-1 md:mb-2">
-                                    CONNECTED TECHNOLOGY
-                                </h2>
-                                <h3 className="text-2xl md:text-5xl font-orbitron font-bold mb-4 text-white">
-                                    16" CURVED DISPLAY
-                                </h3>
-
-                                <div className="grid grid-cols-2 gap-y-4 gap-x-6 mb-4">
-                                    <div>
-                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
-                                            1920<span className="text-amber-400 text-xs md:text-sm ml-1">x720</span>
-                                        </div>
-                                        <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
-                                            HD Resolution
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
-                                            5<span className="text-amber-400 text-xs md:text-sm ml-1">modes</span>
-                                        </div>
-                                        <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
-                                            Customizable Views
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="text-[10px] md:text-sm text-metal-silver font-rajdhani leading-relaxed">
-                                    Real-time telemetry and performance data at your fingertips
-                                </p>
-                            </div>
-                        </motion.div>
-                    )}
-
-                    {/* Steering Wheel Info - Right side - Hidden when feature is active */}
+                    {/* Steering Wheel Info - Left side - First Feature */}
                     {!activeFeature && (
                         <motion.div
                             style={{ opacity: steeringOpacity, x: steeringX, willChange: "transform, opacity" }}
-                            className="absolute right-6 md:right-12 lg:right-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[80vw] md:max-w-md pointer-events-auto"
+                            className="absolute left-6 md:left-12 lg:left-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[80vw] md:max-w-md pointer-events-auto"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-r-2 border-white">
+                            <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-l-2 border-white">
                                 <h2 className="text-white font-orbitron tracking-[0.3em] text-[10px] md:text-xs mb-1 md:mb-2">
                                     RACE-INSPIRED CONTROL
                                 </h2>
                                 <h3 className="text-2xl md:text-5xl font-orbitron font-bold mb-4 text-white">
                                     CARBON FIBER WHEEL
                                 </h3>
-
                                 <div className="grid grid-cols-2 gap-y-4 gap-x-6 mb-4">
                                     <div>
                                         <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
@@ -493,10 +438,10 @@ export default function InteriorExperience() {
                         </motion.div>
                     )}
 
-                    {/* Center Console Info - Bottom center - Hidden when feature is active */}
+                    {/* Speedometer Info - Bottom center - Second Feature */}
                     {!activeFeature && (
                         <motion.div
-                            style={{ opacity: consoleOpacity, y: consoleY, willChange: "transform, opacity" }}
+                            style={{ opacity: speedometerOpacity, y: speedometerY, willChange: "transform, opacity" }}
                             className="absolute bottom-12 md:bottom-20 left-1/2 -translate-x-1/2 max-w-[90vw] md:max-w-2xl pointer-events-auto"
                         >
                             <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-b-2 border-blue-400">
@@ -506,7 +451,6 @@ export default function InteriorExperience() {
                                 <h3 className="text-2xl md:text-5xl font-orbitron font-bold mb-4 text-white text-center">
                                     LUXURY CONSOLE
                                 </h3>
-
                                 <div className="grid grid-cols-3 gap-4 md:gap-6">
                                     <div className="text-center">
                                         <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
@@ -537,6 +481,44 @@ export default function InteriorExperience() {
                         </motion.div>
                     )}
 
+                    {/* Digital Cockpit Info - Right side - Third Feature */}
+                    {!activeFeature && (
+                        <motion.div
+                            style={{ opacity: cockpitOpacity, x: cockpitX, willChange: "transform, opacity" }}
+                            className="absolute right-6 md:right-12 lg:right-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[80vw] md:max-w-md pointer-events-auto"
+                        >
+                            <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-r-2 border-amber-400">
+                                <h2 className="text-amber-400 font-orbitron tracking-[0.3em] text-[10px] md:text-xs mb-1 md:mb-2">
+                                    CONNECTED TECHNOLOGY
+                                </h2>
+                                <h3 className="text-2xl md:text-5xl font-orbitron font-bold mb-4 text-white">
+                                    16" CURVED DISPLAY
+                                </h3>
+                                <div className="grid grid-cols-2 gap-y-4 gap-x-6 mb-4">
+                                    <div>
+                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
+                                            1920<span className="text-amber-400 text-xs md:text-sm ml-1">x720</span>
+                                        </div>
+                                        <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
+                                            HD Resolution
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
+                                            5<span className="text-amber-400 text-xs md:text-sm ml-1">modes</span>
+                                        </div>
+                                        <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
+                                            Customizable Views
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-[10px] md:text-sm text-metal-silver font-rajdhani leading-relaxed">
+                                    Real-time telemetry and performance data at your fingertips
+                                </p>
+                            </div>
+                        </motion.div>
+                    )}
+
                     {/* Final Stats - Stays at bottom */}
                     <motion.div
                         style={{ opacity: statsOpacity, willChange: "opacity" }}
@@ -548,6 +530,6 @@ export default function InteriorExperience() {
                     </motion.div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

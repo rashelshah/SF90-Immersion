@@ -11,6 +11,8 @@ interface UniversalScrollCanvasProps {
     imageExtension?: string; // e.g., "jpg" or "webp"
     cropBottomPercent?: number; // 0 to 1, e.g., 0.10 for 10%
     loadingText?: string;
+    padLength?: number;
+    startIndex?: number;
 }
 
 export default function UniversalScrollCanvas({
@@ -20,7 +22,9 @@ export default function UniversalScrollCanvas({
     imagePrefix = "",
     imageExtension = "jpg",
     cropBottomPercent = 0,
-    loadingText = "LOADING EXPERIENCE"
+    loadingText = "LOADING EXPERIENCE",
+    padLength = 3,
+    startIndex = 1
 }: UniversalScrollCanvasProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
@@ -32,9 +36,8 @@ export default function UniversalScrollCanvas({
     useEffect(() => {
         let loadedCount = 0;
         const imgArray: HTMLImageElement[] = [];
-        const padLength = 3; // Assuming 001, 002 based on current files
 
-        for (let i = 1; i <= totalFrames; i++) {
+        for (let i = startIndex; i < startIndex + totalFrames; i++) {
             const img = new Image();
             const paddedIndex = String(i).padStart(padLength, '0');
             img.src = `${imageFolderPath}/${imagePrefix}${paddedIndex}.${imageExtension}`;
@@ -59,7 +62,7 @@ export default function UniversalScrollCanvas({
             imgArray.push(img);
         }
         setImages(imgArray);
-    }, [totalFrames, imageFolderPath, imagePrefix, imageExtension]);
+    }, [totalFrames, imageFolderPath, imagePrefix, imageExtension, padLength, startIndex]);
 
     // Draw Function
     const renderFrame = (index: number) => {
