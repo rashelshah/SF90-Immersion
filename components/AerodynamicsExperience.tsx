@@ -155,7 +155,7 @@ export default function AerodynamicsExperience() {
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
                                     onClick={() => handleDotClick('front')}
-                                    className="absolute left-[25%] md:left-[30%] top-[40%] md:top-[45%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-20"
+                                    className="absolute left-[30%] md:left-[30%] top-[50%] md:top-[45%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-20"
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -193,7 +193,7 @@ export default function AerodynamicsExperience() {
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
                                     onClick={() => handleDotClick('rear')}
-                                    className="absolute right-[20%] md:right-[25%] top-[45%] md:top-[50%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-20"
+                                    className="absolute right-[25%] md:right-[25%] top-[50%] md:top-[50%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-20"
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -292,36 +292,36 @@ export default function AerodynamicsExperience() {
                                         damping: 25,
                                         duration: 0.4
                                     }}
-                                    // Mobile: Top Sheet (to avoid covering car) | Desktop: Right Side
-                                    className="absolute left-4 right-4 top-24 md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-4 max-w-[90vw] md:w-80 pointer-events-auto z-20"
+                                    // Mobile: Bottom Sheet (to avoid covering car) | Desktop: Right Side
+                                    className="absolute left-4 right-4 bottom-12 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-4 max-w-[90vw] md:w-80 pointer-events-auto z-20"
                                 >
                                     <div className="bg-black/60 backdrop-blur-md border-l-2 border-white/20 shadow-2xl relative">
                                         {/* Accent border based on flow */}
                                         <div className={`absolute top-0 left-0 w-1 h-full ${activeFlow === 'front' ? 'bg-cyan-400' : 'bg-ferrari-red'}`} />
 
                                         {/* Panel Content */}
-                                        <div className="p-4 md:p-6">
-                                            <h3 className={`text-xl md:text-2xl font-orbitron font-bold mb-4 md:mb-6 ${activeFlow === 'front' ? 'text-cyan-400' : 'text-ferrari-red'}`}>
+                                        <div className="p-3 md:p-6">
+                                            <h3 className={`text-lg md:text-2xl font-orbitron font-bold mb-3 md:mb-6 ${activeFlow === 'front' ? 'text-cyan-400' : 'text-ferrari-red'}`}>
                                                 {activeFlow === 'front' ? frontAeroData.title : rearAeroData.title}
                                             </h3>
 
-                                            <div className="space-y-4">
+                                            <div className="space-y-2 md:space-y-4">
                                                 {(activeFlow === 'front' ? frontAeroData.stats : rearAeroData.stats).map((stat, i) => (
                                                     <motion.div
                                                         key={i}
                                                         initial={{ opacity: 0, x: 20 }}
                                                         animate={{ opacity: 1, x: 0 }}
                                                         transition={{ delay: i * 0.1 }}
-                                                        className="border-b border-white/10 pb-3"
+                                                        className="border-b border-white/10 pb-1 md:pb-3"
                                                     >
-                                                        <div className="text-xs text-metal-silver font-rajdhani tracking-wider uppercase mb-1">
+                                                        <div className="text-[10px] md:text-xs text-metal-silver font-rajdhani tracking-wider uppercase mb-0.5 md:mb-1">
                                                             {stat.label}
                                                         </div>
                                                         <div className="flex items-baseline gap-2">
-                                                            <span className="text-2xl md:text-3xl font-orbitron font-bold text-white">
+                                                            <span className="text-lg md:text-3xl font-orbitron font-bold text-white">
                                                                 {stat.value}
                                                             </span>
-                                                            <span className={`text-sm font-orbitron ${activeFlow === 'front' ? 'text-cyan-400' : 'text-ferrari-red'}`}>
+                                                            <span className={`text-xs md:text-sm font-orbitron ${activeFlow === 'front' ? 'text-cyan-400' : 'text-ferrari-red'}`}>
                                                                 {stat.unit}
                                                             </span>
                                                         </div>

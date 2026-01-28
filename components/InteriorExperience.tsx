@@ -171,7 +171,7 @@ export default function InteriorExperience() {
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
                                     onClick={() => handleDotClick('cockpit')}
-                                    className="absolute left-[25%] md:left-[20%] top-[35%] md:top-[45%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
+                                    className="absolute left-[20%] md:left-[20%] top-[50%] md:top-[45%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -209,7 +209,7 @@ export default function InteriorExperience() {
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
                                     onClick={() => handleDotClick('steering')}
-                                    className="absolute left-1/2 -translate-x-1/2 top-[30%] md:top-[40%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
+                                    className="absolute left-1/2 -translate-x-1/2 top-[50%] md:top-[40%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -247,7 +247,7 @@ export default function InteriorExperience() {
                                     animate={{ scale: 1, opacity: 1 }}
                                     exit={{ scale: 0, opacity: 0 }}
                                     onClick={() => handleDotClick('console')}
-                                    className="absolute right-[25%] md:right-[20%] top-[40%] md:top-[50%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
+                                    className="absolute right-[20%] md:right-[20%] top-[50%] md:top-[50%] w-6 h-6 md:w-8 md:h-8 flex items-center justify-center pointer-events-auto cursor-pointer group z-30"
                                     whileHover={{ scale: 1.2 }}
                                     whileTap={{ scale: 0.9 }}
                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
@@ -329,8 +329,8 @@ export default function InteriorExperience() {
                                         damping: 25,
                                         duration: 0.4
                                     }}
-                                    // Mobile: Top Sheet (to avoid covering car) | Desktop: Right Float
-                                    className="absolute left-4 right-4 top-24 md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:-translate-y-1/2 max-w-[90vw] md:w-80 pointer-events-auto z-20"
+                                    // Mobile: Bottom Sheet (to avoid covering car) | Desktop: Right Float
+                                    className="absolute left-4 right-4 bottom-12 md:bottom-auto md:left-auto md:right-4 md:top-1/2 md:-translate-y-1/2 max-w-[90vw] md:w-80 pointer-events-auto z-20"
                                 >
                                     <div className="bg-black/60 backdrop-blur-md border-l-2 border-white/20 shadow-2xl relative">
                                         {/* Accent border based on feature */}
@@ -339,13 +339,13 @@ export default function InteriorExperience() {
                                                 'bg-blue-400'
                                             }`} />
 
-                                        <div className="p-4 md:p-6">
+                                        <div className="p-3 md:p-6">
                                             {/* Title */}
                                             <motion.h3
                                                 initial={{ opacity: 0, y: 20 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 transition={{ delay: 0.1 }}
-                                                className={`text-xl md:text-3xl font-orbitron font-bold mb-4 md:mb-6 ${activeFeature === 'cockpit' ? 'text-amber-400' :
+                                                className={`text-lg md:text-3xl font-orbitron font-bold mb-3 md:mb-6 ${activeFeature === 'cockpit' ? 'text-amber-400' :
                                                     activeFeature === 'steering' ? 'text-white' :
                                                         'text-blue-400'
                                                     }`}
@@ -356,7 +356,7 @@ export default function InteriorExperience() {
                                             </motion.h3>
 
                                             {/* Stats Grid */}
-                                            <div className="space-y-4">
+                                            <div className="space-y-2 md:space-y-4">
                                                 {(activeFeature === 'cockpit' ? cockpitData.stats :
                                                     activeFeature === 'steering' ? steeringData.stats :
                                                         consoleData.stats).map((stat, i) => (
@@ -365,16 +365,16 @@ export default function InteriorExperience() {
                                                                 initial={{ opacity: 0, x: 20 }}
                                                                 animate={{ opacity: 1, x: 0 }}
                                                                 transition={{ delay: i * 0.1 }}
-                                                                className="border-b border-white/10 pb-3"
+                                                                className="border-b border-white/10 pb-1 md:pb-3"
                                                             >
-                                                                <div className="text-xs text-metal-silver font-rajdhani tracking-wider uppercase mb-1">
+                                                                <div className="text-[10px] md:text-xs text-metal-silver font-rajdhani tracking-wider uppercase mb-0.5 md:mb-1">
                                                                     {stat.label}
                                                                 </div>
                                                                 <div className="flex items-baseline gap-2">
-                                                                    <span className="text-2xl md:text-3xl font-orbitron font-bold text-white">
+                                                                    <span className="text-lg md:text-3xl font-orbitron font-bold text-white">
                                                                         {stat.value}
                                                                     </span>
-                                                                    <span className={`text-sm font-orbitron ${activeFeature === 'cockpit' ? 'text-amber-400' :
+                                                                    <span className={`text-xs md:text-sm font-orbitron ${activeFeature === 'cockpit' ? 'text-amber-400' :
                                                                         activeFeature === 'steering' ? 'text-white' :
                                                                             'text-blue-400'
                                                                         }`}>

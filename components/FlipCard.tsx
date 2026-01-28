@@ -85,11 +85,12 @@ export default function FlipCard({ src, alt, aspectRatio }: FlipCardProps) {
             aria-pressed={isFlipped}
         >
             <motion.div
-                className="relative w-full h-full"
+                className="relative w-full h-full will-change-transform"
+                initial={false}
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
                 style={{
                     transformStyle: 'preserve-3d',
-                    transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                    transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
                 }}
             >
                 {/* Front Face - Image */}
@@ -131,7 +132,7 @@ export default function FlipCard({ src, alt, aspectRatio }: FlipCardProps) {
                         transform: 'rotateY(180deg)',
                     }}
                 >
-                    <div className="relative w-full h-full flex items-center justify-center p-8">
+                    <div className="relative w-full h-full flex items-center justify-center p-4 md:p-8">
                         {/* Background gradient with red glow */}
                         <div className="absolute inset-0 bg-gradient-to-br from-carbon-gray via-ferrari-black to-carbon-gray" />
 
@@ -155,21 +156,21 @@ export default function FlipCard({ src, alt, aspectRatio }: FlipCardProps) {
                         {/* Border glow */}
                         <div className="absolute inset-0 rounded-3xl border border-ferrari-red/30 glow-red" />
 
-                        {/* Fact content */}
-                        <div className="relative z-10 text-center">
-                            <div className="mb-4">
+                        {/* Fact content - Added overflow handling for small screens */}
+                        <div className="relative z-10 text-center w-full max-h-full overflow-y-auto no-scrollbar py-2">
+                            <div className="mb-2 md:mb-4">
                                 <div className="inline-block px-3 py-1 rounded-full bg-ferrari-red/20 border border-ferrari-red/30">
-                                    <span className="text-xs font-orbitron tracking-wider text-ferrari-red uppercase">
+                                    <span className="text-[10px] md:text-xs font-orbitron tracking-wider text-ferrari-red uppercase">
                                         Ferrari Fact
                                     </span>
                                 </div>
                             </div>
 
-                            <p className="text-white font-rajdhani text-base sm:text-lg leading-relaxed font-medium">
+                            <p className="text-white font-rajdhani text-sm md:text-base lg:text-lg leading-relaxed font-medium px-2">
                                 {currentFact}
                             </p>
 
-                            <div className="mt-6 text-metal-silver/50 text-xs font-orbitron tracking-wide">
+                            <div className="mt-4 md:mt-6 text-metal-silver/50 text-[10px] md:text-xs font-orbitron tracking-wide">
                                 DOUBLE-TAP FOR ANOTHER FACT
                             </div>
                         </div>

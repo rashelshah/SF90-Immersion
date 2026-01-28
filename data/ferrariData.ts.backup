@@ -53,6 +53,37 @@ export const ferrariFacts: string[] = [
     "It takes approximately 3 months to hand-build each Ferrari from start to finish.",
     "Ferrari leather interiors use hides from cattle raised in temperate climates to avoid imperfections.",
     "The company's founder famously said: 'The most important victory is the one which has to arrive.'",
+    },
+    {
+        id: 16,
+        src: '/gallery/ferrari_gallery_16.jpeg',
+        alt: 'Ferrari SF90 Stradale detail shot',
+        aspectRatio: 'square'
+    },
+    {
+        id: 17,
+        src: '/gallery/ferrari_gallery_17.jpeg',
+        alt: 'Ferrari SF90 Stradale',
+        aspectRatio: 'landscape'
+    },
+    {
+        id: 18,
+        src: '/gallery/ferrari_gallery_18.jpeg',
+        alt: 'Ferrari SF90 Stradale',
+        aspectRatio: 'portrait'
+    },
+    {
+        id: 19,
+        src: '/gallery/ferrari_gallery_19.jpeg',
+        alt: 'Ferrari SF90 Stradale',
+        aspectRatio: 'landscape'
+    },
+    {
+        id: 20,
+        src: '/gallery/ferrari_gallery_20.jpeg',
+        alt: 'Ferrari SF90 Stradale',
+        aspectRatio: 'square'
+
 ];
 
 // Helper function to get a random fun fact
@@ -149,9 +180,10 @@ export const galleryImages: GalleryImage[] = [
     },
     {
         id: 15,
-        src: '/gallery/ferrari_gallery_15_1769605979565.png',
+        src: '/gallery/ferrari_gallery_15_1769605979565.png',    }
         alt: 'Ferrari SF90 Stradale in luxury garage with dramatic lighting',
         aspectRatio: 'landscape'
+    },
     },
     {
         id: 16,
@@ -182,77 +214,5 @@ export const galleryImages: GalleryImage[] = [
         src: '/gallery/ferrari_gallery_20.jpeg',
         alt: 'Ferrari SF90 Stradale',
         aspectRatio: 'square'
-    },
-    {
-        id: 21,
-        src: '/gallery/ferrari_gallery_21.jpeg',
-        alt: 'Ferrari SF90 Stradale rear diffuser detail',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 22,
-        src: '/gallery/ferrari_gallery_22.jpeg',
-        alt: 'Ferrari SF90 Stradale side profile',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 23,
-        src: '/gallery/ferrari_gallery_23.jpeg',
-        alt: 'Ferrari SF90 Stradale interior stitching',
-        aspectRatio: 'square'
-    },
-    {
-        id: 24,
-        src: '/gallery/ferrari_gallery_24.jpeg',
-        alt: 'Ferrari SF90 Stradale wheel rim close-up',
-        aspectRatio: 'square'
-    },
-    {
-        id: 25,
-        src: '/gallery/ferrari_gallery_25.jpeg',
-        alt: 'Ferrari SF90 Stradale charging port',
-        aspectRatio: 'portrait'
-    },
-    {
-        id: 26,
-        src: '/gallery/ferrari_gallery_26.jpeg',
-        alt: 'Ferrari SF90 Stradale front grille',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 27,
-        src: '/gallery/ferrari_gallery_27.jpeg',
-        alt: 'Ferrari SF90 Stradale engine bay',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 28,
-        src: '/gallery/ferrari_gallery_28.jpeg',
-        alt: 'Ferrari SF90 Stradale track action',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 29,
-        src: '/gallery/ferrari_gallery_29.jpeg',
-        alt: 'Ferrari SF90 Stradale sunset view',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 30,
-        src: '/gallery/ferrari_gallery_30.jpeg',
-        alt: 'Ferrari SF90 Stradale night drive',
-        aspectRatio: 'square'
-    },
-    {
-        id: 31,
-        src: '/gallery/ferrari_gallery_31.jpeg',
-        alt: 'Ferrari SF90 Stradale track performance',
-        aspectRatio: 'landscape'
-    },
-    {
-        id: 32,
-        src: '/gallery/ferrari_gallery_32.jpeg',
-        alt: 'Ferrari SF90 Stradale rear lights detail',
-        aspectRatio: 'square'
-    },
+
 ];
