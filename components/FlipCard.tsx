@@ -9,9 +9,10 @@ interface FlipCardProps {
     src: string;
     alt: string;
     aspectRatio: 'square' | 'portrait' | 'landscape';
+    priority?: boolean;
 }
 
-export default function FlipCard({ src, alt, aspectRatio }: FlipCardProps) {
+export default function FlipCard({ src, alt, aspectRatio, priority = false }: FlipCardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [currentFact, setCurrentFact] = useState<string>('');
     const [isLoaded, setIsLoaded] = useState(false);
@@ -106,7 +107,8 @@ export default function FlipCard({ src, alt, aspectRatio }: FlipCardProps) {
                             src={src}
                             alt={alt}
                             fill
-                            loading="lazy"
+                            priority={priority}
+                            loading={priority ? undefined : "lazy"}
                             className={`object-cover transition-all duration-500 ease-out ${isLoaded ? 'scale-100 blur-0' : 'scale-110 blur-sm'
                                 } group-hover:scale-110`}
                             onLoad={() => setIsLoaded(true)}
