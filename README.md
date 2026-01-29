@@ -1,6 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ferrari SF90 Stradale Experience
 
-## Getting Started
+An immersive, scrolling web experience showcasing the engineering marvel that is the Ferrari SF90 Stradale. This project utilizes advanced web technologies to deliver a cinematic and interactive presentation of the car's features, including aerodynamics, interior luxury, and hybrid performance.
+
+## 🏎️ Project Overview
+
+This application is designed to mimic a high-end product landing page, focusing on visual storytelling through scroll-based animations and frame-by-frame image sequences. It offers a detailed look into the SF90 Stradale's various systems.
+
+## ✨ Features
+
+-   **Immersive Scroll Animations**: Smooth, frame-by-frame scrubbable video sequences using `framer-motion` and canvas rendering.
+-   **Interactive Dialogue Boxes**: Detailed feature breakdowns (Aerodynamics, Interior, Engine) that appear dynamically as you explore.
+-   **Responsive Design**: Fully optimized for customized mobile and desktop experiences.
+-   **Performance Focused**: Efficient image loading and canvas rendering for smooth playback.
+
+## 🛠️ Tech Stack
+
+-   **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+-   **Language**: TypeScript
+-   **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+-   **Animations**: [Framer Motion](https://www.framer.com/motion/)
+-   **Utilities**: `clsx`, `tailwind-merge`
+
+## 🚀 Getting Started
 
 First, run the development server:
 
@@ -16,21 +37,20 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Key Components
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   **`UniversalScrollCanvas`**: The core component responsible for efficiently rendering frame sequences on a canvas based on scroll position.
+-   **`AerodynamicsExperience`**: Handles the active aero visualization and interactive hotspots.
+-   **`InteriorExperience`**: Showcases the cockpit, steering, and display systems.
+-   **`HybridExperience`**: Explains the layout of the V8 engine and electric motors.
 
-## Learn More
+## 🎨 Design Philosophy
 
-To learn more about Next.js, take a look at the following resources:
+The design strictly follows a premium aesthetic:
+-   **Typography**: Orbitron (Headings) & Rajdhani (Body) for a futuristic, technical feel.
+-   **Color Palette**: Ferrari Red accents against Deep Black/Carbon backgrounds.
+-   **Interaction**: "Scroll to Explore" paradigm to give users control over the pacing.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*(This is a fan project for demonstration purposes)*
