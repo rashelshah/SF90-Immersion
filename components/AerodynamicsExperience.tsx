@@ -293,7 +293,7 @@ export default function AerodynamicsExperience() {
                                         duration: 0.4
                                     }}
                                     // Mobile: Bottom Sheet (to avoid covering car) | Desktop: Right Side
-                                    className="absolute left-4 right-4 bottom-12 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-4 max-w-[90vw] md:w-80 pointer-events-auto z-20"
+                                    className="absolute left-4 right-4 bottom-12 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:left-auto md:right-4 max-w-[80vw] md:w-80 pointer-events-auto z-20"
                                 >
                                     <div className="bg-black/60 backdrop-blur-md border-l-2 border-white/20 shadow-2xl relative">
                                         {/* Accent border based on flow */}
@@ -363,19 +363,19 @@ export default function AerodynamicsExperience() {
                     {!activeFlow && (
                         <motion.div
                             style={{ opacity: frontOpacity, x: frontX, willChange: "transform, opacity" }}
-                            className="absolute left-6 md:left-12 lg:left-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[80vw] md:max-w-md pointer-events-auto"
+                            className="absolute left-6 md:left-12 lg:left-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[60vw] md:max-w-md pointer-events-auto"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-l-2 border-ferrari-red">
-                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[10px] md:text-xs mb-1 md:mb-2">
+                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-l-2 border-ferrari-red">
+                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2">
                                     DOWNFORCE GENERATION
                                 </h2>
-                                <h3 className="text-2xl md:text-5xl font-orbitron font-bold mb-4 text-white">
+                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white">
                                     FRONT SPLITTER
                                 </h3>
 
-                                <div className="grid grid-cols-2 gap-y-4 gap-x-6 mb-4">
+                                <div className="grid grid-cols-2 gap-y-2 md:gap-y-4 gap-x-2 md:gap-x-6 mb-2 md:mb-4">
                                     <div>
-                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
+                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
                                             390<span className="text-ferrari-red text-xs md:text-sm ml-1">kg</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
@@ -402,19 +402,19 @@ export default function AerodynamicsExperience() {
                     {!activeFlow && (
                         <motion.div
                             style={{ opacity: aeroOpacity, x: aeroX, willChange: "transform, opacity" }}
-                            className="absolute right-6 md:right-12 lg:right-20 bottom-24 md:top-1/2 md:-translate-y-1/2 max-w-[80vw] md:max-w-md pointer-events-auto text-right"
+                            className="absolute right-6 md:right-12 lg:right-20 bottom-24 md:top-1/2 md:-translate-y-1/2 max-w-[60vw] md:max-w-md pointer-events-auto text-right"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-4 md:p-6 rounded-lg border-r-2 border-ferrari-red">
-                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[10px] md:text-xs mb-1 md:mb-2 text-right">
+                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-r-2 border-ferrari-red">
+                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2 text-right">
                                     INTELLIGENT CONTROL
                                 </h2>
-                                <h3 className="text-2xl md:text-5xl font-orbitron font-bold mb-4 text-white text-right">
+                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white text-right">
                                     ACTIVE REAR WING
                                 </h3>
 
-                                <div className="grid grid-cols-2 gap-y-4 gap-x-6 mb-4">
+                                <div className="grid grid-cols-2 gap-y-2 md:gap-y-4 gap-x-2 md:gap-x-6 mb-2 md:mb-4">
                                     <div className="col-start-2">
-                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
+                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
                                             4<span className="text-ferrari-red text-xs md:text-sm ml-1">Modes</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
@@ -422,10 +422,10 @@ export default function AerodynamicsExperience() {
                                         </div>
                                     </div>
                                     <div className="col-start-1 row-start-1">
-                                        <div className="text-xl md:text-3xl font-bold font-orbitron text-white mb-1">
+                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
                                             &lt;0.01<span className="text-ferrari-red text-xs md:text-sm ml-1">s</span>
                                         </div>
-                                        <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
+                                        <div className="text-metal-silver font-rajdhani text-[8px] md:text-xs tracking-wider uppercase">
                                             Response Time
                                         </div>
                                     </div>
