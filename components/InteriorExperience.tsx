@@ -401,19 +401,19 @@ export default function InteriorExperience() {
                     {!activeFeature && (
                         <motion.div
                             style={{ opacity: steeringOpacity, x: steeringX, willChange: "transform, opacity" }}
-                            className="absolute left-6 md:left-12 lg:left-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[60vw] md:max-w-md pointer-events-auto"
+                            className="absolute left-4 md:left-12 lg:left-20 top-20 md:top-1/2 md:-translate-y-1/2 max-w-[45vw] md:max-w-md pointer-events-auto"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-l-2 border-white">
-                                <h2 className="text-white font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2">
+                            <div className="bg-black/20 backdrop-blur-sm p-2 md:p-6 rounded-lg border-l-2 border-white">
+                                <h2 className="text-white font-orbitron tracking-[0.3em] text-[6px] md:text-xs mb-1 md:mb-2">
                                     RACE-INSPIRED CONTROL
                                 </h2>
-                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white">
+                                <h3 className="text-sm md:text-5xl font-orbitron font-bold mb-1 md:mb-4 text-white">
                                     CARBON FIBER WHEEL
                                 </h3>
-                                <div className="grid grid-cols-2 gap-y-2 md:gap-y-4 gap-x-2 md:gap-x-6 mb-2 md:mb-4">
+                                <div className="grid grid-cols-2 gap-y-1 md:gap-y-4 gap-x-2 md:gap-x-6 mb-1 md:mb-4">
                                     <div>
-                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
-                                            4<span className="text-white text-xs md:text-sm ml-1">modes</span>
+                                        <div className="text-sm md:text-3xl font-bold font-orbitron text-white mb-0.5">
+                                            4<span className="text-white text-[8px] md:text-sm ml-1">modes</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
                                             Manettino Settings
@@ -439,19 +439,19 @@ export default function InteriorExperience() {
                     {!activeFeature && (
                         <motion.div
                             style={{ opacity: speedometerOpacity, y: speedometerY, willChange: "transform, opacity" }}
-                            className="absolute bottom-12 md:bottom-20 left-1/2 -translate-x-1/2 max-w-[80vw] md:max-w-2xl pointer-events-auto"
+                            className="absolute bottom-16 md:bottom-20 left-1/2 -translate-x-1/2 max-w-[85vw] md:max-w-2xl pointer-events-auto"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-b-2 border-blue-400">
-                                <h2 className="text-blue-400 font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2 text-center">
+                            <div className="bg-black/20 backdrop-blur-sm p-2 md:p-6 rounded-lg border-b-2 border-blue-400">
+                                <h2 className="text-blue-400 font-orbitron tracking-[0.3em] text-[6px] md:text-xs mb-1 md:mb-2 text-center">
                                     PREMIUM CRAFTSMANSHIP
                                 </h2>
-                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white text-center">
+                                <h3 className="text-sm md:text-5xl font-orbitron font-bold mb-1 md:mb-4 text-white text-center">
                                     LUXURY CONSOLE
                                 </h3>
-                                <div className="grid grid-cols-3 gap-2 md:gap-6">
+                                <div className="grid grid-cols-3 gap-1 md:gap-6">
                                     <div className="text-center">
-                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
-                                            2<span className="text-blue-400 text-xs md:text-sm ml-1">zones</span>
+                                        <div className="text-sm md:text-3xl font-bold font-orbitron text-white mb-0.5">
+                                            2<span className="text-blue-400 text-[8px] md:text-sm ml-1">zones</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
                                             Climate Control
@@ -482,19 +482,19 @@ export default function InteriorExperience() {
                     {!activeFeature && (
                         <motion.div
                             style={{ opacity: cockpitOpacity, x: cockpitX, willChange: "transform, opacity" }}
-                            className="absolute right-6 md:right-12 lg:right-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[60vw] md:max-w-md pointer-events-auto"
+                            className="absolute right-4 md:right-12 lg:right-20 top-20 md:top-1/2 md:-translate-y-1/2 max-w-[45vw] md:max-w-md pointer-events-auto"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-r-2 border-amber-400">
-                                <h2 className="text-amber-400 font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2">
+                            <div className="bg-black/20 backdrop-blur-sm p-2 md:p-6 rounded-lg border-r-2 border-amber-400">
+                                <h2 className="text-amber-400 font-orbitron tracking-[0.3em] text-[6px] md:text-xs mb-1 md:mb-2">
                                     CONNECTED TECHNOLOGY
                                 </h2>
-                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white">
+                                <h3 className="text-sm md:text-5xl font-orbitron font-bold mb-1 md:mb-4 text-white">
                                     16" CURVED DISPLAY
                                 </h3>
-                                <div className="grid grid-cols-2 gap-y-2 md:gap-y-4 gap-x-2 md:gap-x-6 mb-2 md:mb-4">
+                                <div className="grid grid-cols-2 gap-y-1 md:gap-y-4 gap-x-2 md:gap-x-6 mb-1 md:mb-4">
                                     <div>
-                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
-                                            1920<span className="text-amber-400 text-xs md:text-sm ml-1">x720</span>
+                                        <div className="text-sm md:text-3xl font-bold font-orbitron text-white mb-0.5">
+                                            1920<span className="text-amber-400 text-[8px] md:text-sm ml-1">x720</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
                                             HD Resolution

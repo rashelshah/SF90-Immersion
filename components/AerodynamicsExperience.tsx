@@ -363,19 +363,19 @@ export default function AerodynamicsExperience() {
                     {!activeFlow && (
                         <motion.div
                             style={{ opacity: frontOpacity, x: frontX, willChange: "transform, opacity" }}
-                            className="absolute left-6 md:left-12 lg:left-20 top-24 md:top-1/2 md:-translate-y-1/2 max-w-[60vw] md:max-w-md pointer-events-auto"
+                            className="absolute left-4 md:left-12 lg:left-20 top-20 md:top-1/2 md:-translate-y-1/2 max-w-[45vw] md:max-w-md pointer-events-auto"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-l-2 border-ferrari-red">
-                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2">
+                            <div className="bg-black/20 backdrop-blur-sm p-2 md:p-6 rounded-lg border-l-2 border-ferrari-red">
+                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[6px] md:text-xs mb-1 md:mb-2">
                                     DOWNFORCE GENERATION
                                 </h2>
-                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white">
+                                <h3 className="text-sm md:text-5xl font-orbitron font-bold mb-1 md:mb-4 text-white">
                                     FRONT SPLITTER
                                 </h3>
 
-                                <div className="grid grid-cols-2 gap-y-2 md:gap-y-4 gap-x-2 md:gap-x-6 mb-2 md:mb-4">
+                                <div className="grid grid-cols-2 gap-y-1 md:gap-y-4 gap-x-2 md:gap-x-6 mb-1 md:mb-4">
                                     <div>
-                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
+                                        <div className="text-sm md:text-3xl font-bold font-orbitron text-white mb-0.5">
                                             390<span className="text-ferrari-red text-xs md:text-sm ml-1">kg</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
@@ -402,19 +402,19 @@ export default function AerodynamicsExperience() {
                     {!activeFlow && (
                         <motion.div
                             style={{ opacity: aeroOpacity, x: aeroX, willChange: "transform, opacity" }}
-                            className="absolute right-6 md:right-12 lg:right-20 bottom-24 md:top-1/2 md:-translate-y-1/2 max-w-[60vw] md:max-w-md pointer-events-auto text-right"
+                            className="absolute right-4 md:right-12 lg:right-20 bottom-20 md:top-1/2 md:-translate-y-1/2 max-w-[45vw] md:max-w-md pointer-events-auto text-right"
                         >
-                            <div className="bg-black/20 backdrop-blur-sm p-3 md:p-6 rounded-lg border-r-2 border-ferrari-red">
-                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[8px] md:text-xs mb-1 md:mb-2 text-right">
+                            <div className="bg-black/20 backdrop-blur-sm p-2 md:p-6 rounded-lg border-r-2 border-ferrari-red">
+                                <h2 className="text-ferrari-red font-orbitron tracking-[0.3em] text-[6px] md:text-xs mb-1 md:mb-2 text-right">
                                     INTELLIGENT CONTROL
                                 </h2>
-                                <h3 className="text-xl md:text-5xl font-orbitron font-bold mb-2 md:mb-4 text-white text-right">
+                                <h3 className="text-sm md:text-5xl font-orbitron font-bold mb-1 md:mb-4 text-white text-right">
                                     ACTIVE REAR WING
                                 </h3>
 
-                                <div className="grid grid-cols-2 gap-y-2 md:gap-y-4 gap-x-2 md:gap-x-6 mb-2 md:mb-4">
+                                <div className="grid grid-cols-2 gap-y-1 md:gap-y-4 gap-x-2 md:gap-x-6 mb-1 md:mb-4">
                                     <div className="col-start-2">
-                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
+                                        <div className="text-sm md:text-3xl font-bold font-orbitron text-white mb-0.5">
                                             4<span className="text-ferrari-red text-xs md:text-sm ml-1">Modes</span>
                                         </div>
                                         <div className="text-metal-silver font-rajdhani text-[10px] md:text-xs tracking-wider uppercase">
@@ -422,10 +422,10 @@ export default function AerodynamicsExperience() {
                                         </div>
                                     </div>
                                     <div className="col-start-1 row-start-1">
-                                        <div className="text-lg md:text-3xl font-bold font-orbitron text-white mb-1">
-                                            &lt;0.01<span className="text-ferrari-red text-xs md:text-sm ml-1">s</span>
+                                        <div className="text-sm md:text-3xl font-bold font-orbitron text-white mb-0.5">
+                                            &lt;0.01<span className="text-ferrari-red text-[8px] md:text-sm ml-1">s</span>
                                         </div>
-                                        <div className="text-metal-silver font-rajdhani text-[8px] md:text-xs tracking-wider uppercase">
+                                        <div className="text-metal-silver font-rajdhani text-[6px] md:text-xs tracking-wider uppercase">
                                             Response Time
                                         </div>
                                     </div>
